@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b2kaq458ei8iu" path="res://scenes/waveA.tres" id="5_yxlcp"]
 [ext_resource type="Texture2D" uid="uid://cr7j51dcas6n2" path="res://scenes/waveB.tres" id="6_ebg2g"]
 [ext_resource type="PackedScene" uid="uid://bm1iehwpwp0dn" path="res://scenes/water_valve.tscn" id="9_q8u5g"]
+[ext_resource type="PackedScene" uid="uid://p3fk4onmffgi" path="res://scenes/npc_1.tscn" id="10_lhr70"]
 [ext_resource type="Script" uid="uid://c4yv3itqsy04x" path="res://scripts/flood_water.gd" id="15_water"]
 [ext_resource type="Script" uid="uid://jv1kkhs8ptvy" path="res://scripts/multiplayer_main.gd" id="16_main"]
 
@@ -32,7 +33,7 @@ material = SubResource("StandardMaterial3D_ground")
 size = Vector2(1000, 1000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
-size = Vector3(20, 0.2, 20)
+size = Vector3(1000, 0.2, 1000)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2ofn6"]
 size = Vector3(20, 0.2, 20)
@@ -127,7 +128,7 @@ text = "sadasd"
 horizontal_alignment = 2
 
 [node name="PipeLargeValve2" parent="." unique_id=841781098 instance=ExtResource("9_q8u5g")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.106001, 0.13219172, -0.46946406)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.1615586, 0.038482845, -0.59978414)
 
 [node name="building-type-a2" parent="." unique_id=1140573710 instance=ExtResource("1_elqb8")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -2.8645802, 0.099999905, -3.9368505)
@@ -136,5 +137,8 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -2.8645802, 0.099999905, -3.9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="building-type-a2/building-type-a/StaticBody3D" unique_id=2042088440]
 shape = SubResource("ConcavePolygonShape3D_q8u5g")
+
+[node name="NPC1" parent="." unique_id=1994827218 instance=ExtResource("10_lhr70")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1815623, 0.311167, 7.294381)
 
 [editable path="building-type-a2"]

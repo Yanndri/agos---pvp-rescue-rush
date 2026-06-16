@@ -18,6 +18,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_interact()
 
 func _interact() -> void:
+	if not _is_local_player(nearby_player):
+		nearby_player = null
+		prompt.visible = false
+		return
 	if multiplayer.multiplayer_peer == null:
 		_carry_for_player(nearby_player.name)
 	elif multiplayer.is_server():
@@ -35,7 +39,7 @@ func _carry_for_player(player_name: StringName) -> void:
 	if carried:
 		return
 	var player := get_tree().current_scene.get_node_or_null(String(player_name)) as Node3D
-	if player == null:
+	if player == null or player == self or not player.is_in_group("players"):
 		return
 	carried = true
 	nearby_player = null
@@ -58,7 +62,11 @@ func _on_prompt_area_body_exited(body: Node3D) -> void:
 	prompt.visible = false
 
 func _is_local_player(body: Node) -> bool:
+	if body == null or body == self:
+		return false
 	if not body is CharacterBody3D:
+		return false
+	if not body.is_in_group("players"):
 		return false
 	if multiplayer.multiplayer_peer == null:
 		return true

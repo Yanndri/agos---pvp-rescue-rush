@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://p3fk4onmffgi" path="res://scenes/npc_1.tscn" id="10_lhr70"]
 [ext_resource type="Script" uid="uid://c4yv3itqsy04x" path="res://scripts/flood_water.gd" id="15_water"]
 [ext_resource type="Script" uid="uid://jv1kkhs8ptvy" path="res://scripts/multiplayer_main.gd" id="16_main"]
+[ext_resource type="PackedScene" uid="uid://cfkev6orpfvm8" path="res://scenes/first_aid_kit.tscn" id="17_first_aid"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rvslj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -140,5 +141,8 @@ shape = SubResource("ConcavePolygonShape3D_q8u5g")
 
 [node name="NPC1" parent="." unique_id=1994827218 instance=ExtResource("10_lhr70")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1815623, 0.311167, 7.294381)
+
+[node name="FirstAidKit" parent="." unique_id=541162600 instance=ExtResource("17_first_aid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2125998, 0.7750004, 4.5567474)
 
 [editable path="building-type-a2"]

@@ -1,6 +1,6 @@
 extends Node3D
 
-const PLAYER_SCENE := preload("res://scenes/PlayerShaun.tscn")
+@export var PLAYER_SCENE := preload("res://scenes/PlayerShaun.tscn")
 const SPAWN_POINTS := [
 	Vector3(-4.8, 0.8, 2.2),
 	Vector3(-2.8, 0.8, 2.2),

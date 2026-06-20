@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bra6ug2wjmj0j"]
+
+[ext_resource type="Shader" uid="uid://d2pxrch4crrap" path="res://Imports/BinbunGrass/src/shader/ground.gdshader" id="1_qlfk2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qlfk2")

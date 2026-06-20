@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://de4ufcdg63tg"
+path="res://.godot/imported/piston-thin-round.obj-84be73eec1a09cd7795ee2547a7415ce.mesh"
+
+[deps]
+
+files=["res://.godot/imported/piston-thin-round.obj-84be73eec1a09cd7795ee2547a7415ce.mesh"]
+
+source_file="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/piston-thin-round.obj"
+dest_files=["res://.godot/imported/piston-thin-round.obj-84be73eec1a09cd7795ee2547a7415ce.mesh", "res://.godot/imported/piston-thin-round.obj-84be73eec1a09cd7795ee2547a7415ce.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

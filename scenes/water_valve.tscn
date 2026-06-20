@@ -1,12 +1,12 @@
 [gd_scene format=4 uid="uid://bm1iehwpwp0dn"]
 
-[ext_resource type="ArrayMesh" uid="uid://bly4ssic5pq6r" path="res://Assets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-valve.obj" id="1_vaqm5"]
+[ext_resource type="ArrayMesh" uid="uid://bly4ssic5pq6r" path="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-valve.obj" id="1_vaqm5"]
 [ext_resource type="Script" uid="uid://c1rj3um3toot1" path="res://scripts/water_valve.gd" id="2_valve"]
-[ext_resource type="PackedScene" uid="uid://6eb7s81amv8p" path="res://Assets/Zombie Apocalypse Kit - March 2024/Environment/glTF/WaterTower.gltf" id="3_gwu31"]
-[ext_resource type="ArrayMesh" uid="uid://dxpht04ejwogy" path="res://Assets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-long.obj" id="4_jylbc"]
-[ext_resource type="ArrayMesh" uid="uid://bygu84rsj5n5i" path="res://Assets/kenney_factory-kit_3.0/Models/OBJ format/hopper-high-round.obj" id="5_pdrsm"]
-[ext_resource type="ArrayMesh" uid="uid://bp8x2ef7rcjn7" path="res://Assets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-bend.obj" id="6_pdrsm"]
-[ext_resource type="Texture2D" uid="uid://bhf687yhyk4ho" path="res://Assets/SketchfabExports/drain_0.png" id="7_eesco"]
+[ext_resource type="PackedScene" uid="uid://6eb7s81amv8p" path="res://GameAssets/ZombieApocalypseKit/glTF/WaterTower.gltf" id="3_gwu31"]
+[ext_resource type="ArrayMesh" uid="uid://dxpht04ejwogy" path="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-long.obj" id="4_jylbc"]
+[ext_resource type="ArrayMesh" uid="uid://bygu84rsj5n5i" path="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/hopper-high-round.obj" id="5_pdrsm"]
+[ext_resource type="ArrayMesh" uid="uid://bp8x2ef7rcjn7" path="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/pipe-large-bend.obj" id="6_pdrsm"]
+[ext_resource type="Texture2D" uid="uid://bhf687yhyk4ho" path="res://GameAssets/SketchfabExports/drain_0.png" id="7_eesco"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_prompt"]
 radius = 1.8

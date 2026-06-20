@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dvyvkkciie72o"
+path="res://.godot/imported/floor-large.obj-3b76c82ec6d2036a0226e8b460c1ba96.mesh"
+
+[deps]
+
+files=["res://.godot/imported/floor-large.obj-3b76c82ec6d2036a0226e8b460c1ba96.mesh"]
+
+source_file="res://GameAssets/kenney_factory-kit_3.0/Models/OBJ format/floor-large.obj"
+dest_files=["res://.godot/imported/floor-large.obj-3b76c82ec6d2036a0226e8b460c1ba96.mesh", "res://.godot/imported/floor-large.obj-3b76c82ec6d2036a0226e8b460c1ba96.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

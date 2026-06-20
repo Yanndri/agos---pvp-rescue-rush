@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://co4q1sy4bv3tt"]
 
-[ext_resource type="Texture2D" uid="uid://cj33oy4tm5sgb" path="res://Assets/SketchfabExports/hospital_stretcher_trolley_0.png" id="1_72okn"]
+[ext_resource type="Texture2D" uid="uid://cj33oy4tm5sgb" path="res://GameAssets/SketchfabExports/hospital_stretcher_trolley_0.png" id="1_72okn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ntw5c"]
 resource_name = "Material_82"

@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://c5k6x2664ohp4"]
 
-[ext_resource type="Texture2D" uid="uid://dpc4fpeexcio1" path="res://Assets/ambulancetruck_PolyPackVehicles.png" id="1_rl6hy"]
+[ext_resource type="Texture2D" uid="uid://dpc4fpeexcio1" path="res://GameAssets/SketchfabExports/ambulancetruck_PolyPackVehicles.png" id="1_rl6hy"]
 [ext_resource type="Script" uid="uid://ca4ncqqm0m0c4" path="res://scripts/ambulance_controller.gd" id="2_ambulance_controller"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ambulance"]

@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://dovu05lxm4m84"]
 
 [ext_resource type="Script" uid="uid://do3sv7dnxhmaj" path="res://scripts/player_shaun_controller.gd" id="2_shaun_controller"]
-[ext_resource type="Texture2D" uid="uid://bgyl4cx4hlskx" path="res://Assets/Zombie Apocalypse Kit - March 2024/Characters/glTF/Characters_Shaun_Zombie_Atlas.png" id="2_y3w4x"]
+[ext_resource type="Texture2D" uid="uid://bgyl4cx4hlskx" path="res://Imports/Zombie Apocalypse Kit - March 2024/Characters/glTF/Characters_Shaun_Zombie_Atlas.png" id="2_y3w4x"]
 [ext_resource type="Script" uid="uid://dn8frt2374hyx" path="res://scripts/camera_pivot.gd" id="3_rh33p"]
 [ext_resource type="Script" uid="uid://bagokiuolhgue" path="res://scripts/PlayerPickupInteractor.gd" id="3_rqnvt"]
 

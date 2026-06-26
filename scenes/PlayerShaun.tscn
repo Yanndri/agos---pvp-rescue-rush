@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bgyl4cx4hlskx" path="res://Imports/Zombie Apocalypse Kit - March 2024/Characters/glTF/Characters_Shaun_Zombie_Atlas.png" id="2_y3w4x"]
 [ext_resource type="Script" uid="uid://dn8frt2374hyx" path="res://scripts/camera_pivot.gd" id="3_rh33p"]
 [ext_resource type="Script" uid="uid://bagokiuolhgue" path="res://scripts/PlayerPickupInteractor.gd" id="3_rqnvt"]
-[ext_resource type="Script" uid="uid://dv7j54sodd8oa" path="res://scripts/ambulance_locator.gd" id="4_locator"]
+[ext_resource type="Theme" uid="uid://xfivjot4x36a" path="res://Themes/bottomrightkeys.tres" id="5_3jncw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l0o5"]
 resource_name = "Atlas"
@@ -8078,20 +8078,74 @@ fov = 55.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625, 0)
 shape = SubResource("CapsuleShape3D_y3w4x")
 
-[node name="AmbulanceLocator" type="CanvasLayer" parent="." unique_id=1892407721]
-script = ExtResource("4_locator")
-
-[node name="IndicatorLabel" type="Label" parent="AmbulanceLocator" unique_id=1892407722]
-visible = false
-offset_left = -70.0
-offset_top = -24.0
-offset_right = 70.0
-offset_bottom = 24.0
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="PlayerPickupInteractor" type="Node" parent="." unique_id=329820540]
 script = ExtResource("3_rqnvt")
 interact_key = null
 use_key = null
 hand_path = NodePath("../PlayerModel/CharacterArmature/Skeleton3D/Middle1_L")
+
+[node name="Control" type="Control" parent="." unique_id=1192188996]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1272541763]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -62.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=527909544]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=2120728749]
+layout_mode = 2
+theme = ExtResource("5_3jncw")
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Label3" type="Label" parent="Control/MarginContainer/VBoxContainer/Key" unique_id=488134484]
+layout_mode = 2
+text = "Drop"
+horizontal_alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/VBoxContainer/Key" unique_id=1123826155]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/Key/PanelContainer" unique_id=774865459]
+layout_mode = 2
+text = "G"
+
+[node name="Key2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=348846286]
+layout_mode = 2
+theme = ExtResource("5_3jncw")
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Label3" type="Label" parent="Control/MarginContainer/VBoxContainer/Key2" unique_id=1809123176]
+layout_mode = 2
+text = "Interact"
+horizontal_alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/VBoxContainer/Key2" unique_id=1377367784]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/Key2/PanelContainer" unique_id=361068862]
+layout_mode = 2
+text = "E"

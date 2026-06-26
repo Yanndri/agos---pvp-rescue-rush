@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cfkev6orpfvm8" path="res://scenes/Interactables/first_aid_kit.tscn" id="17_first_aid"]
 [ext_resource type="PackedScene" uid="uid://bnopqr6dnpqo1" path="res://scenes/Interactables/food_supply.tscn" id="17_ft6cd"]
 [ext_resource type="PackedScene" uid="uid://cneu15yupj3kc" path="res://scenes/wait_player.tscn" id="17_nfivy"]
+[ext_resource type="PackedScene" uid="uid://tspaj4by8a1w" path="res://scenes/storage.tscn" id="18_bb450"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rvslj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -257,4 +258,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.583887, 0, 18.402493)
 [node name="WaitPlayer2" parent="WaitingPlayers" unique_id=1192800596 instance=ExtResource("17_nfivy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.583887, 0, 10.873245)
 
+[node name="Storage" parent="." unique_id=2102791721 instance=ExtResource("18_bb450")]
+transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, -7.90861, 0.099999905, 5.4516926)
+
 [editable path="building-type-a2"]
+[editable path="Storage"]

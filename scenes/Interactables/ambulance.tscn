@@ -7,6 +7,7 @@
 [ext_resource type="ArrayMesh" uid="uid://krirm2td1db7" path="res://GameAssets/KayKit_Restaurant_Bits_1.0_FREE/obj/crate_tomatoes.obj" id="5_f63ls"]
 [ext_resource type="ArrayMesh" uid="uid://cfepx3hpjkc2x" path="res://GameAssets/KayKit_Restaurant_Bits_1.0_FREE/obj/crate_lid.obj" id="6_hl6l6"]
 [ext_resource type="PackedScene" uid="uid://cajrqtke5twpp" path="res://scenes/Interactables/prompt_area.tscn" id="7_3fhhq"]
+[ext_resource type="PackedScene" uid="uid://tspaj4by8a1w" path="res://scenes/storage.tscn" id="7_y57d8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ambulance"]
 size = Vector3(6.8, 2.2, 2.8)
@@ -302,8 +303,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_y4rbg")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_driver_area"]
-size = Vector3(3.7973633, 3.2891846, 4.1330566)
+[sub_resource type="SphereShape3D" id="SphereShape3D_y57d8"]
+radius = 4.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y57d8"]
 size = Vector3(10, 10, 10)
@@ -389,15 +390,17 @@ mesh = ExtResource("5_f63ls")
 transform = Transform3D(0.9270715, 0.1381182, 0.3485139, -0.1333094, 0.9903508, -0.037869617, -0.3503815, -0.011352342, 0.93653834, 0.060278893, 0.94255483, 0.000108897686)
 mesh = ExtResource("6_hl6l6")
 
-[node name="StoreItem" type="Area3D" parent="." unique_id=252726860]
-transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, -2.3841858e-07, -5.9604645e-08, 0)
-collision_layer = 8
-collision_mask = 16
+[node name="Storage" parent="." unique_id=2102791721 instance=ExtResource("7_y57d8")]
+transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, 3.0258296, 1.4336994, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StoreItem" unique_id=234657707]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6025736, 1.3945923, -2.1175824e-22)
-shape = SubResource("BoxShape3D_driver_area")
-debug_color = Color(0.9916622, 0, 0.2686876, 0.41960785)
+[node name="CollisionShape3D" parent="Storage/PromptArea" parent_id_path=PackedInt32Array(2102791721, 989733329) index="0" unique_id=1844716175]
+shape = SubResource("SphereShape3D_y57d8")
+
+[node name="Chest" parent="Storage" index="2" unique_id=967999207]
+visible = false
+
+[node name="CollisionShape3D" parent="Storage/Chest/StaticBody3D" parent_id_path=PackedInt32Array(2102791721, 1275248115) index="0" unique_id=1267369322]
+disabled = true
 
 [node name="DriverArea" parent="." unique_id=989733329 instance=ExtResource("7_3fhhq")]
 
@@ -410,4 +413,6 @@ debug_color = Color(0.9999737, 0, 0.110571496, 0.41960785)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0359125, 5.7507124, 0)
 text = "E to Drive"
 
+[editable path="Storage"]
+[editable path="Storage/PromptArea"]
 [editable path="DriverArea"]

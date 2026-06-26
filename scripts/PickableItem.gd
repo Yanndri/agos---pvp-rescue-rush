@@ -24,6 +24,7 @@ var spin_node_start_transform: Transform3D
 
 
 func _ready() -> void:
+	add_to_group("pickable_items")
 
 	if spin_node != null:
 		spin_node_start_transform = spin_node.transform

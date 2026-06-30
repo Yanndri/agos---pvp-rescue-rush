@@ -3,14 +3,13 @@ extends CharacterBody3D
 @export var interact_action := "interact"
 @export var carry_offset := Vector3(0.0, 2.25, 0.0)
 
-@onready var prompt_area: Area3D = $PromptArea
-@onready var prompt: Label3D = $PromptArea/PromptLabel
+@onready var prompt_area: PromptArea = $PromptArea
 
 var nearby_player: Node3D
 var carried := false
 
 func _ready() -> void:
-	prompt.visible = false
+	prompt_area._hide_prompt()
 
 	prompt_area.body_entered.connect(_on_prompt_area_body_entered)
 	prompt_area.body_exited.connect(_on_prompt_area_body_exited)
@@ -26,7 +25,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _interact() -> void:
 	if not _is_local_player(nearby_player):
 		nearby_player = null
-		prompt.visible = false
+		prompt_area._hide_prompt()
 		return
 	if multiplayer.multiplayer_peer == null:
 		_carry_for_player(nearby_player.name)
@@ -49,7 +48,7 @@ func _carry_for_player(player_name: StringName) -> void:
 		return
 	carried = true
 	nearby_player = null
-	prompt.visible = false
+	prompt_area._hide_prompt()
 	_disable_collision_shapes(self)
 	reparent(player, false)
 	position = carry_offset
@@ -59,13 +58,13 @@ func _on_prompt_area_body_entered(body: Node3D) -> void:
 	if carried or not _is_local_player(body):
 		return
 	nearby_player = body
-	prompt.visible = true
+	prompt_area._show_prompt()
 
 func _on_prompt_area_body_exited(body: Node3D) -> void:
 	if body != nearby_player:
 		return
 	nearby_player = null
-	prompt.visible = false
+	prompt_area._hide_prompt()
 
 func _is_local_player(body: Node) -> bool:
 	if body == null or body == self:

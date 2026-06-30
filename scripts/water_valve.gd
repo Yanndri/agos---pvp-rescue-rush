@@ -4,8 +4,8 @@ extends Node3D
 @export var interact_action := "interact"
 @export var hold_duration := 1.5
 
-@onready var prompt: Label3D = $PromptArea/PromptLabel
-@onready var prompt_area = $PromptArea
+@onready var prompt_area : PromptArea = $PromptArea
+
 var water: Node
 var nearby_player: Node3D
 var hold_time := 0.0
@@ -13,7 +13,7 @@ var is_holding := false
 
 func _ready() -> void:
 	water = %Water
-	prompt.visible = false
+	prompt_area._hide_prompt()
 	_update_prompt()
 	
 	if not prompt_area.local_player_entered.is_connected(_on_prompt_area_local_player_entered):
@@ -77,25 +77,25 @@ func _on_prompt_area_local_player_entered(body: Node3D) -> void:
 	if not _is_local_player(body):
 		return
 	nearby_player = body
-	prompt.visible = true
+	prompt_area._show_prompt()
 	_update_prompt()
 
 func _on_prompt_area_local_player_exited(body: Node3D) -> void:
 	if body != nearby_player:
 		return
 	nearby_player = null
-	prompt.visible = false
+	prompt_area._hide_prompt()
 	_cancel_hold_interact()
 
 func _update_prompt() -> void:
 	if nearby_player == null:
-		prompt.text = "Hold Interact to drain water"
+		prompt_area._set_prompt("Hold [F] to drain water")
 		return
 	if is_holding:
 		var percent := int(clamp(hold_time / hold_duration, 0.0, 1.0) * 100.0)
-		prompt.text = "Draining... %d%%" % percent
+		prompt_area._set_prompt("Draining... %d%%" % percent)
 	else:
-		prompt.text = "Hold Interact to drain water"
+		prompt_area._set_prompt("Hold [F] to drain water")
 
 func _is_local_player(body: Node) -> bool:
 	if not body is CharacterBody3D:

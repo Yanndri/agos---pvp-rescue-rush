@@ -8042,7 +8042,7 @@ size = Vector2(2, 2)
 render_priority = 1
 shader = ExtResource("4_ujfix")
 shader_parameter/pixelation_level = 1
-shader_parameter/color_levels = 8.0
+shader_parameter/color_levels = 10.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y3w4x"]
 radius = 0.21191406

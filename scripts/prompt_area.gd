@@ -4,9 +4,7 @@ class_name PromptArea
 signal local_player_entered(player: CharacterBody3D)
 signal local_player_exited(player: CharacterBody3D)
 
-@export var prompt_label_path: NodePath = NodePath("PromptLabel")
-
-@onready var prompt_label: Label3D = get_node_or_null(prompt_label_path) as Label3D
+@export var prompt_label: Label
 
 var current_local_player: CharacterBody3D
 
@@ -55,6 +53,9 @@ func _on_body_exited(body: Node3D) -> void:
 	_hide_prompt()
 	local_player_exited.emit(player)
 
+func _set_prompt(new_text : String) -> void:
+	if prompt_label != null:
+		prompt_label.text = new_text
 
 func _show_prompt() -> void:
 	if prompt_label != null:

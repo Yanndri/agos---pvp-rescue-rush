@@ -1,27 +1,49 @@
 [gd_scene format=3 uid="uid://cajrqtke5twpp"]
 
 [ext_resource type="Script" uid="uid://bvcfrowyy8hd" path="res://scripts/prompt_area.gd" id="1_7rv2a"]
+[ext_resource type="Theme" uid="uid://xfivjot4x36a" path="res://Themes/bottomrightkeys.tres" id="2_qv7jm"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pickup"]
 radius = 3.603
 
-[node name="PromptArea" type="Area3D" unique_id=989733329]
+[node name="PromptArea" type="Area3D" unique_id=989733329 node_paths=PackedStringArray("prompt_label")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 collision_layer = 8
 collision_mask = 16
 script = ExtResource("1_7rv2a")
+prompt_label = NodePath("Control/PromptLabel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1844716175]
 shape = SubResource("SphereShape3D_pickup")
 
-[node name="PromptLabel" type="Label3D" parent="." unique_id=987523048]
-billboard = 1
-no_depth_test = true
-fixed_size = true
-texture_filter = 2
-render_priority = 2
-outline_render_priority = 1
-modulate = Color(1, 0, 0, 1)
-outline_modulate = Color(1, 1, 1, 1)
-text = "E"
-font_size = 20
+[node name="Control" type="Control" parent="." unique_id=82958598]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -80.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+theme = ExtResource("2_qv7jm")
+
+[node name="PromptLabel" type="Label" parent="Control" unique_id=394908014]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "[F] to Interact"
+vertical_alignment = 2

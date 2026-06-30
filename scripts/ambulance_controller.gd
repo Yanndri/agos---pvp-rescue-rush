@@ -16,6 +16,11 @@ const TRANSPARENT_AMBULANCE_MATERIAL := preload("res://Themes/transparent_ambula
 @export var wheel_spin_axis := Vector3.UP
 @export var max_wheel_steer_degrees := 35.0
 @export var wheel_steer_speed := 12.0
+@export var interact_action := "interact"
+@export var move_forward_action := "move_up"
+@export var move_back_action := "move_down"
+@export var steer_left_action := "move_left"
+@export var steer_right_action := "move_right"
 
 @onready var driver_area: Area3D = $DriverArea
 @onready var truck: MeshInstance3D = $"Model/Ambulance-Truck"
@@ -48,11 +53,9 @@ func _ready() -> void:
 	driver_area.body_exited.connect(_on_driver_area_body_exited)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event is InputEventKey:
+	if event is InputEventKey and event.echo:
 		return
-	if event.echo or not event.pressed:
-		return
-	if event.keycode != KEY_E:
+	if not event.is_action_pressed(interact_action):
 		return
 
 	if driver != null and _is_local_player(driver):
@@ -76,8 +79,8 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var throttle := int(Input.is_key_pressed(KEY_W)) - int(Input.is_key_pressed(KEY_S))
-	var steering := int(Input.is_key_pressed(KEY_A)) - int(Input.is_key_pressed(KEY_D))
+	var throttle := int(Input.is_action_pressed(move_forward_action)) - int(Input.is_action_pressed(move_back_action))
+	var steering := int(Input.is_action_pressed(steer_left_action)) - int(Input.is_action_pressed(steer_right_action))
 	var braking := Input.is_key_pressed(KEY_SPACE)
 
 	if throttle > 0:

@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var interact_key := KEY_E
+@export var interact_action := "interact"
 @export var carry_offset := Vector3(0.0, 2.25, 0.0)
 
 @onready var prompt_area: Area3D = $PromptArea
@@ -18,7 +18,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if carried or nearby_player == null:
 		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == interact_key:
+	if event is InputEventKey and event.echo:
+		return
+	if event.is_action_pressed(interact_action):
 		_interact()
 
 func _interact() -> void:

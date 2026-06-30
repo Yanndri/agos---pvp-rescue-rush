@@ -9,6 +9,10 @@ extends CharacterBody3D
 @export var turn_speed := 8.0
 @export var land_animation_time := 0.25
 @export var model_yaw_offset_degrees := 180.0
+@export var move_left_action := "move_left"
+@export var move_right_action := "move_right"
+@export var move_up_action := "move_up"
+@export var move_down_action := "move_down"
 
 @onready var animation_tree: AnimationTree = $PlayerModel/AnimationTree
 @onready var animation_playback: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
@@ -53,8 +57,8 @@ func _physics_process(delta: float) -> void:
 		_play_animation(&"Idle")
 		return
 	var input_dir := Vector2.ZERO
-	input_dir.x = int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A))
-	input_dir.y = int(Input.is_key_pressed(KEY_S)) - int(Input.is_key_pressed(KEY_W))
+	input_dir.x = int(Input.is_action_pressed(move_right_action)) - int(Input.is_action_pressed(move_left_action))
+	input_dir.y = int(Input.is_action_pressed(move_down_action)) - int(Input.is_action_pressed(move_up_action))
 	input_dir = input_dir.normalized()
 
 	var direction := _get_camera_relative_direction(input_dir)

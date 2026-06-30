@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var interact_key := KEY_E
+@export var interact_action := "interact"
 @export var store_radius := 1.5
 @export var stored_items_parent_path: NodePath = NodePath("StoredItems")
 @export var prompt_area_path: NodePath = NodePath("PromptArea")
@@ -30,11 +30,9 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if nearby_player == null:
 		return
-	if not event is InputEventKey:
+	if event is InputEventKey and event.echo:
 		return
-	if event.echo or not event.pressed:
-		return
-	if event.keycode != interact_key:
+	if not event.is_action_pressed(interact_action):
 		return
 
 	_toggle_storage_ui()

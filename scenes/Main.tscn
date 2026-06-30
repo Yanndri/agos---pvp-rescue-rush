@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b2kaq458ei8iu" path="res://scenes/waveA.tres" id="5_yxlcp"]
 [ext_resource type="Texture2D" uid="uid://cr7j51dcas6n2" path="res://scenes/waveB.tres" id="6_ebg2g"]
 [ext_resource type="PackedScene" uid="uid://kdmv8gesh8hy" path="res://scenes/control_milestone.tscn" id="8_bjd11"]
-[ext_resource type="PackedScene" uid="uid://p3fk4onmffgi" path="res://scenes/npc_1.tscn" id="10_lhr70"]
+[ext_resource type="PackedScene" uid="uid://p3fk4onmffgi" path="res://scenes/Interactables/npc_1.tscn" id="10_lhr70"]
 [ext_resource type="Shader" uid="uid://jqrwa1d8fqbj" path="res://Imports/BinbunGrass/src/shader/grass.gdshader" id="13_cvmbd"]
 [ext_resource type="Texture2D" uid="uid://dv6g2qxppq3ec" path="res://Imports/BinbunGrass/src/texture/basic/grass_basic_atlas.png" id="15_bb450"]
 [ext_resource type="Script" uid="uid://c4yv3itqsy04x" path="res://scripts/flood_water.gd" id="15_water"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://bnopqr6dnpqo1" path="res://scenes/Interactables/food_supply.tscn" id="17_ft6cd"]
 [ext_resource type="PackedScene" uid="uid://cneu15yupj3kc" path="res://scenes/wait_player.tscn" id="17_nfivy"]
 [ext_resource type="PackedScene" uid="uid://tspaj4by8a1w" path="res://scenes/storage.tscn" id="18_bb450"]
+[ext_resource type="Shader" uid="uid://bjv6nltos4v2u" path="res://Themes/vhs_effect.gdshader" id="19_nfivy"]
+[ext_resource type="PackedScene" uid="uid://bov77qxj47tum" path="res://scenes/Interactables/npc_2.tscn" id="20_1nqs0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rvslj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -156,6 +158,34 @@ top_radius = 1.0
 bottom_radius = 1.0
 height = 0.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1nqs0"]
+height = 0.5
+radius = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ptkwr"]
+shader = ExtResource("19_nfivy")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.0
+shader_parameter/scanlines_width = 0.0
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 0.10000000149012
+shader_parameter/distort_intensity = 0.0
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.0
+shader_parameter/aberration = 4.7499999933364734e-08
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.2000000095
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.1950000092625
+
 [node name="Main" type="Node3D" unique_id=631280010]
 script = ExtResource("16_main")
 
@@ -208,6 +238,7 @@ shape = SubResource("ConcavePolygonShape3D_q8u5g")
 
 [node name="NPC1" parent="." unique_id=1994827218 instance=ExtResource("10_lhr70")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1815623, 0.4119239, 7.294381)
+carry_offset = Vector3(0, 2.25, 0)
 
 [node name="FirstAidKit" parent="." unique_id=541162600 instance=ExtResource("17_first_aid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2125998, 0.7750004, 4.5567474)
@@ -250,6 +281,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4866276, 2.3609571, 15.1540
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.337883, -0.03419113)
 mesh = SubResource("CylinderMesh_oxdc4")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Spawn/MeshInstance3D" unique_id=1344216587]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Spawn/MeshInstance3D/StaticBody3D" unique_id=41749954]
+shape = SubResource("CylinderShape3D_1nqs0")
+
 [node name="WaitingPlayers" type="Node" parent="." unique_id=1725163035]
 
 [node name="WaitPlayer" parent="WaitingPlayers" unique_id=892846362 instance=ExtResource("17_nfivy")]
@@ -261,5 +297,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.583887, 0, 10.873245)
 [node name="Storage" parent="." unique_id=2102791721 instance=ExtResource("18_bb450")]
 transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, -7.90861, 0.099999905, 5.4516926)
 
+[node name="VHSCanvas" type="CanvasLayer" parent="." unique_id=1280741231]
+layer = -1
+visible = false
+
+[node name="VHSEffect" type="ColorRect" parent="VHSCanvas" unique_id=110250099]
+material = SubResource("ShaderMaterial_ptkwr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NPC2" parent="." unique_id=1767933390 instance=ExtResource("20_1nqs0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4225752, 0.38361883, 6.066969)
+
 [editable path="building-type-a2"]
 [editable path="Storage"]
+[editable path="Storage/PromptArea"]

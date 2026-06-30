@@ -5,6 +5,10 @@ extends CharacterBody3D
 @export var jump_velocity := 5.0
 @export var gravity := 18.0
 @export var turn_speed := 8.0
+@export var move_left_action := "move_left"
+@export var move_right_action := "move_right"
+@export var move_up_action := "move_up"
+@export var move_down_action := "move_down"
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -28,8 +32,8 @@ func _physics_process(delta: float) -> void:
 	jump_animation_time_left = max(jump_animation_time_left - delta, 0.0)
 
 	var input_dir := Vector2.ZERO
-	input_dir.x = int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A))
-	input_dir.y = int(Input.is_key_pressed(KEY_S)) - int(Input.is_key_pressed(KEY_W))
+	input_dir.x = int(Input.is_action_pressed(move_right_action)) - int(Input.is_action_pressed(move_left_action))
+	input_dir.y = int(Input.is_action_pressed(move_down_action)) - int(Input.is_action_pressed(move_up_action))
 	input_dir = input_dir.normalized()
 
 	var direction := Vector3(input_dir.x, 0.0, input_dir.y).normalized()

@@ -1,9 +1,9 @@
 extends Node
 class_name PlayerPickupInteractor
 
-@export var interact_key := KEY_E
-@export var use_key := KEY_F
-@export var drop_key := KEY_G
+@export var interact_action := "interact"
+@export var use_action := ""
+@export var drop_action := "drop"
 @export var drop_hold_duration := 0.0
 
 @export var hand_path: NodePath
@@ -37,26 +37,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_local_player():
 		return
 
-	if not event is InputEventKey:
+	if event is InputEventKey and event.echo:
 		return
 
-	if event.echo:
+	if event.is_action_pressed(drop_action):
+		_start_drop_hold()
 		return
 
-	if event.keycode == drop_key:
-		if event.pressed:
-			_start_drop_hold()
-		else:
-			_cancel_drop_hold()
+	if event.is_action_released(drop_action):
+		_cancel_drop_hold()
 		return
 
-	if not event.pressed:
-		return
-
-	if event.keycode == interact_key:
+	if event.is_action_pressed(interact_action):
 		try_pick_up()
 
-	if event.keycode == use_key:
+	if not use_action.is_empty() and event.is_action_pressed(use_action):
 		try_use_item()
 
 

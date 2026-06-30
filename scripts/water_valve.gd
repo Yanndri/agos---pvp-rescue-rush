@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var reduce_amount := 0.75
-@export var interact_key := KEY_E
+@export var interact_action := "interact"
 @export var hold_duration := 1.5
 
 @onready var prompt: Label3D = $PromptArea/PromptLabel
@@ -33,11 +33,12 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if nearby_player == null:
 		return
-	if event is InputEventKey and event.keycode == interact_key:
-		if event.pressed and not event.echo:
-			_start_hold_interact()
-		elif not event.pressed:
-			_cancel_hold_interact()
+	if event is InputEventKey and event.echo:
+		return
+	if event.is_action_pressed(interact_action):
+		_start_hold_interact()
+	elif event.is_action_released(interact_action):
+		_cancel_hold_interact()
 
 func _start_hold_interact() -> void:
 	is_holding = true
@@ -88,13 +89,13 @@ func _on_prompt_area_local_player_exited(body: Node3D) -> void:
 
 func _update_prompt() -> void:
 	if nearby_player == null:
-		prompt.text = "Hold E to drain water"
+		prompt.text = "Hold Interact to drain water"
 		return
 	if is_holding:
 		var percent := int(clamp(hold_time / hold_duration, 0.0, 1.0) * 100.0)
 		prompt.text = "Draining... %d%%" % percent
 	else:
-		prompt.text = "Hold E to drain water"
+		prompt.text = "Hold Interact to drain water"
 
 func _is_local_player(body: Node) -> bool:
 	if not body is CharacterBody3D:

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://do8bg3mk7rjy8"]
 
 [ext_resource type="PackedScene" uid="uid://boxlf38i1ulej" path="res://GameAssets/KenneySubUrbanAssets/GLB format/building-type-a.glb" id="1_elqb8"]
-[ext_resource type="Shader" uid="uid://chxv0qnrifs3i" path="res://scenes/water_shader_shader.tres" id="2_nfivy"]
+[ext_resource type="Shader" uid="uid://chxv0qnrifs3i" path="res://Themes/water_shader_shader.tres" id="2_nfivy"]
 [ext_resource type="Texture2D" uid="uid://uk244nlgqof0" path="res://scenes/surfaceNormalA.tres" id="3_1nqs0"]
 [ext_resource type="Texture2D" uid="uid://dcw6j0q81hgeg" path="res://scenes/surfaceNormalB.tres" id="4_1iba3"]
 [ext_resource type="Texture2D" uid="uid://b2kaq458ei8iu" path="res://scenes/waveA.tres" id="5_yxlcp"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bnopqr6dnpqo1" path="res://scenes/Interactables/food_supply.tscn" id="17_ft6cd"]
 [ext_resource type="PackedScene" uid="uid://cneu15yupj3kc" path="res://scenes/wait_player.tscn" id="17_nfivy"]
 [ext_resource type="PackedScene" uid="uid://tspaj4by8a1w" path="res://scenes/storage.tscn" id="18_bb450"]
-[ext_resource type="Shader" uid="uid://bjv6nltos4v2u" path="res://Themes/vhs_effect.gdshader" id="19_nfivy"]
+[ext_resource type="Shader" uid="uid://b40j1avxkd34j" path="res://Themes/pixel_art_screen.gdshader" id="20_1iba3"]
 [ext_resource type="PackedScene" uid="uid://bov77qxj47tum" path="res://scenes/Interactables/npc_2.tscn" id="20_1nqs0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rvslj"]
@@ -162,29 +162,13 @@ height = 0.5
 height = 0.5
 radius = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ptkwr"]
-shader = ExtResource("19_nfivy")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.0
-shader_parameter/scanlines_width = 0.0
-shader_parameter/grille_opacity = 0.0
-shader_parameter/resolution = Vector2(640, 480)
-shader_parameter/pixelate = true
-shader_parameter/roll = true
-shader_parameter/roll_speed = 8.0
-shader_parameter/roll_size = 0.0
-shader_parameter/roll_variation = 0.10000000149012
-shader_parameter/distort_intensity = 0.0
-shader_parameter/noise_opacity = 0.0
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.0
-shader_parameter/aberration = 4.7499999933364734e-08
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.2000000095
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.1950000092625
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qbhb6"]
+shader = ExtResource("20_1iba3")
+shader_parameter/pixel_size = 1
+shader_parameter/color_levels = 6.0
+shader_parameter/dither_strength = 0.1
+shader_parameter/darkest_color = Color(0.13996774, 8.513728e-05, 0.19209597, 1)
+shader_parameter/lightest_color = Color(1, 1, 1, 1)
 
 [node name="Main" type="Node3D" unique_id=631280010]
 script = ExtResource("16_main")
@@ -199,7 +183,7 @@ shadow_opacity = 0.8
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=1913361862]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9705625, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.411828, 0)
 visible = false
 mesh = SubResource("BoxMesh_2ofn6")
 surface_material_override/0 = SubResource("ShaderMaterial_xa025")
@@ -249,6 +233,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7199726, 0.7750004, 4.5567
 [node name="BaseGround" type="Node3D" parent="." unique_id=1422114857]
 
 [node name="Ground" type="MeshInstance3D" parent="BaseGround" unique_id=1176806461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11071777, 0, 0.0155620575)
 material_override = SubResource("StandardMaterial3D_a072j")
 mesh = SubResource("PlaneMesh_7dm0k")
 
@@ -299,10 +284,9 @@ transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, -7.9
 
 [node name="VHSCanvas" type="CanvasLayer" parent="." unique_id=1280741231]
 layer = -1
-visible = false
 
-[node name="VHSEffect" type="ColorRect" parent="VHSCanvas" unique_id=110250099]
-material = SubResource("ShaderMaterial_ptkwr")
+[node name="DotDitherEffect" type="ColorRect" parent="VHSCanvas" unique_id=266258354]
+material = SubResource("ShaderMaterial_qbhb6")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

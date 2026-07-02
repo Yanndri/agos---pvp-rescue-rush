@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dvmhrnv27wcm6" path="res://scripts/help_requirement.gd" id="1_8hqq3"]
 [ext_resource type="Texture2D" uid="uid://51spu5f5bikd" path="res://GameAssets/Icons/medicine-and-thematic-things-pixel-art-3232-icon-pack/1 Icons/Icon2_05.png" id="3_hhl15"]
 [ext_resource type="Texture2D" uid="uid://d20v6alumbud3" path="res://GameAssets/Icons/Free 39 Portraits Pixel Art/1 Portraits/Icons_17.png" id="4_wd62e"]
+[ext_resource type="Texture2D" uid="uid://3cwrud2itirr" path="res://GameAssets/Icons/Free 39 Portraits Pixel Art/1 Portraits/Icons_19.png" id="5_tx240"]
 [ext_resource type="FontFile" uid="uid://cv58kw4qseuv2" path="res://Themes/Fonts/daydream_3/Daydream DEMO.otf" id="5_xs35j"]
 [ext_resource type="PackedScene" uid="uid://cajrqtke5twpp" path="res://scenes/Interactables/prompt_area.tscn" id="6_bwioj"]
 
@@ -51,11 +52,19 @@ render_priority = 3
 texture = ExtResource("3_hhl15")
 
 [node name="Resident" type="Sprite3D" parent="Requirements" unique_id=197879242]
+visible = false
 pixel_size = 0.015
 billboard = 1
 texture_filter = 2
 render_priority = 3
 texture = ExtResource("4_wd62e")
+
+[node name="Battery" type="Sprite3D" parent="Requirements" unique_id=1349686619]
+pixel_size = 0.015
+billboard = 1
+texture_filter = 2
+render_priority = 3
+texture = ExtResource("5_tx240")
 
 [node name="PointsAmount" type="Label3D" parent="Requirements" unique_id=2133084465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

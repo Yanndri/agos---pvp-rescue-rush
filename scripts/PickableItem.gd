@@ -7,7 +7,7 @@ class_name PickableItem
 @export var drop_glide_duration := 0.35
 @export var drop_glide_height := 0.65
 @export var drop_forward_distance := 1.15
-@export var hotbar_icon: Texture2D
+@export var hotbar_icon: Texture2D = preload("res://icon.svg")
 
 @export var spin_when_available := true
 @export var spin_speed_degrees := 90.0

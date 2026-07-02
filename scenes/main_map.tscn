@@ -199,8 +199,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1144495, 0.45686615, 6.133
 [node name="NPC2" parent="." unique_id=466501957 instance=ExtResource("8_ubaj7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0464001, 0.58954465, 6.0187597)
 
-[node name="WaterValve" parent="." unique_id=699937503 instance=ExtResource("9_sa572")]
+[node name="WaterValve" parent="." unique_id=699937503 node_paths=PackedStringArray("flooded_water") instance=ExtResource("9_sa572")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.40507, 1.0244524, -0.97638416)
+flooded_water = NodePath("../Water")
 
 [node name="Storage" parent="." unique_id=385176695 instance=ExtResource("10_rk4p5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2673616, 0.1256619, 0.20874596)

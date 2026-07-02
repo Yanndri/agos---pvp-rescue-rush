@@ -3,7 +3,29 @@ class_name HelpRequirement
 
 signal fulfilled(item: PickableItem)
 
-@export var required_item_name := "FirstAidKit"
+const AVAILABLE_REQUIREMENTS := {
+	"Medkit": {
+		"item_name": "FirstAidKit",
+		"visual_node": "Medkit",
+	},
+	"FoodSupply": {
+		"item_name": "FoodSupply",
+		"visual_node": "FoodSupply",
+	},
+	"Battery": {
+		"item_name": "Battery",
+		"visual_node": "Battery",
+	},
+}
+
+@export_enum("Medkit", "FoodSupply", "Battery") var requirement_type := "Medkit":
+	set(value):
+		requirement_type = value
+		_update_visuals()
+
+# Kept so older scene data using a typed item name still loads.
+var required_item_name := ""
+
 @export var consume_item_when_fulfilled := true
 @export var interact_action := "interact"
 @export var hold_duration := 2.0
@@ -20,13 +42,6 @@ var hold_time := 0.0
 var is_holding := false
 
 @export var requirement_fulfilled := false:
-	set(value):
-		_set_fulfilled(value)
-	get:
-		return _requirement_fulfilled
-
-# Kept so old scene data using the misspelled export still works.
-@export var requirement_fullilled := false:
 	set(value):
 		_set_fulfilled(value)
 	get:
@@ -136,11 +151,12 @@ func _find_pickable_item(node: Node) -> PickableItem:
 
 
 func _is_required_item(item: PickableItem) -> bool:
-	if required_item_name.is_empty():
+	var item_requirement_name := _get_required_item_name()
+	if item_requirement_name.is_empty():
 		return true
 
 	var item_name := String(item.name)
-	return item_name == required_item_name or item_name.begins_with(required_item_name)
+	return item_name == item_requirement_name or item_name.begins_with(item_requirement_name)
 
 
 func _start_hold_interact() -> void:
@@ -228,6 +244,35 @@ func _consume_item(item: PickableItem) -> void:
 func _update_visuals() -> void:
 	if requirements_visual != null:
 		requirements_visual.visible = not _requirement_fulfilled
+		_update_requirement_visuals()
+
+
+func _update_requirement_visuals() -> void:
+	if requirements_visual == null:
+		return
+
+	for requirement in AVAILABLE_REQUIREMENTS.values():
+		var visual_name := String(requirement.get("visual_node", ""))
+		var visual := requirements_visual.get_node_or_null(visual_name) as Node3D
+		if visual != null:
+			visual.visible = false
+
+	var selected_requirement := _get_requirement_data()
+	var selected_visual_name := String(selected_requirement.get("visual_node", ""))
+	var selected_visual := requirements_visual.get_node_or_null(selected_visual_name) as Node3D
+	if selected_visual != null:
+		selected_visual.visible = not _requirement_fulfilled
+
+
+func _get_requirement_data() -> Dictionary:
+	return AVAILABLE_REQUIREMENTS.get(requirement_type, {})
+
+
+func _get_required_item_name() -> String:
+	if not required_item_name.is_empty():
+		return required_item_name
+
+	return String(_get_requirement_data().get("item_name", ""))
 
 
 func _update_progress_label() -> void:

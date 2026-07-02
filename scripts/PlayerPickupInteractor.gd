@@ -7,16 +7,18 @@ class_name PlayerPickupInteractor
 @export var drop_hold_duration := 0.0
 
 @export var hand_path: NodePath
+@export var inventory_path: NodePath = NodePath("../PlayerInventory")
 
 var nearby_pickable: PickableItem
-var held_item: PickableItem
 var player: CharacterBody3D
+var inventory: PlayerInventory
 var drop_hold_left := 0.0
 var is_holding_drop := false
 
 
 func _ready() -> void:
 	player = get_parent() as CharacterBody3D
+	inventory = get_node_or_null(inventory_path) as PlayerInventory
 
 
 func _process(delta: float) -> void:
@@ -24,7 +26,7 @@ func _process(delta: float) -> void:
 		return
 	if not is_holding_drop:
 		return
-	if held_item == null:
+	if _get_held_item() == null:
 		_cancel_drop_hold()
 		return
 	drop_hold_left -= delta
@@ -53,14 +55,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		try_pick_up()
 		return
 
-	if not use_action.is_empty() and event.is_action_pressed(use_action) and held_item != null:
+	if not use_action.is_empty() and event.is_action_pressed(use_action) and _get_held_item() != null:
 		get_viewport().set_input_as_handled()
 		try_use_item()
 		return
 
 
 func _start_drop_hold() -> void:
-	if held_item == null:
+	if _get_held_item() == null:
 		return
 	is_holding_drop = true
 	drop_hold_left = drop_hold_duration
@@ -75,8 +77,12 @@ func try_pick_up() -> void:
 	if nearby_pickable == null:
 		return
 
-	if held_item != null:
-		print("Already holding an item.")
+	if inventory == null:
+		push_warning("Inventory path is wrong: " + str(inventory_path))
+		return
+
+	if not inventory.has_free_slot():
+		print("Hotbar is full.")
 		return
 
 	var hand := get_node_or_null(hand_path) as Node3D
@@ -89,21 +95,26 @@ func try_pick_up() -> void:
 
 
 func try_use_item() -> void:
-	if held_item == null:
+	var item := _get_held_item()
+	if item == null:
 		return
 
-	held_item.use_item(player)
+	item.use_item(player)
+
+	if item.is_queued_for_deletion():
+		clear_held_item(item)
 
 
 func try_drop_item() -> void:
-	if held_item == null:
+	var item := _get_held_item()
+	if item == null:
 		return
-	held_item.request_drop(player)
+	item.request_drop(player)
 
 
 func clear_held_item(item: PickableItem) -> void:
-	if held_item == item:
-		held_item = null
+	if inventory != null:
+		inventory.remove_item(item)
 
 
 func is_local_player() -> bool:
@@ -114,3 +125,14 @@ func is_local_player() -> bool:
 		return true
 
 	return player.is_multiplayer_authority()
+
+func set_held_item(item: PickableItem) -> void:
+	if inventory != null:
+		inventory.add_item(item)
+
+
+func _get_held_item() -> PickableItem:
+	if inventory == null:
+		return null
+
+	return inventory.get_selected_item()

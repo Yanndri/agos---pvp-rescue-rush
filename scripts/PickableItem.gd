@@ -7,6 +7,7 @@ class_name PickableItem
 @export var drop_glide_duration := 0.35
 @export var drop_glide_height := 0.65
 @export var drop_forward_distance := 1.15
+@export var hotbar_icon: Texture2D
 
 @export var spin_when_available := true
 @export var spin_speed_degrees := 90.0
@@ -143,7 +144,7 @@ func pick_up(player: Node3D, hand: Node3D) -> void:
 	var interactor := player.get_node_or_null("PlayerPickupInteractor") as PlayerPickupInteractor
 
 	if interactor != null and interactor.is_local_player():
-		interactor.held_item = self
+		interactor.set_held_item(self)
 
 		if interactor.nearby_pickable == self:
 			interactor.nearby_pickable = null

@@ -5,9 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://51spu5f5bikd" path="res://GameAssets/Icons/medicine-and-thematic-things-pixel-art-3232-icon-pack/1 Icons/Icon2_05.png" id="3_hhl15"]
 [ext_resource type="Texture2D" uid="uid://d20v6alumbud3" path="res://GameAssets/Icons/Free 39 Portraits Pixel Art/1 Portraits/Icons_17.png" id="4_wd62e"]
 [ext_resource type="FontFile" uid="uid://cv58kw4qseuv2" path="res://Themes/Fonts/daydream_3/Daydream DEMO.otf" id="5_xs35j"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xr7qm"]
-radius = 1.8
+[ext_resource type="PackedScene" uid="uid://cajrqtke5twpp" path="res://scenes/Interactables/prompt_area.tscn" id="6_bwioj"]
 
 [sub_resource type="Gradient" id="Gradient_8tp1l"]
 interpolation_mode = 1
@@ -21,13 +19,12 @@ fill = 1
 fill_from = Vector2(0.5117647, 0.5235294)
 fill_to = Vector2(0.88235295, 0.21176471)
 
-[node name="HelpRequirement" type="Area3D" unique_id=556880010]
-collision_mask = 8
-script = ExtResource("1_8hqq3")
+[sub_resource type="SphereShape3D" id="SphereShape3D_tx240"]
+radius = 1.802
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1743084242]
-shape = SubResource("SphereShape3D_xr7qm")
-debug_color = Color(0.8264574, 0.0015792662, 0.95413035, 0.41960785)
+[node name="HelpRequirement" type="Node3D" unique_id=1323832924]
+script = ExtResource("1_8hqq3")
+hold_duration = 1.0
 
 [node name="Requirements" type="Node3D" parent="." unique_id=1746257932]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -60,15 +57,6 @@ texture_filter = 2
 render_priority = 3
 texture = ExtResource("4_wd62e")
 
-[node name="Label3D" type="Label3D" parent="Requirements" unique_id=1612969445]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-billboard = 1
-render_priority = 3
-outline_render_priority = 2
-outline_modulate = Color(1, 0.30980393, 0, 1)
-text = "Give"
-font = ExtResource("5_xs35j")
-
 [node name="PointsAmount" type="Label3D" parent="Requirements" unique_id=2133084465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 billboard = 1
@@ -77,3 +65,10 @@ outline_render_priority = 2
 outline_modulate = Color(1, 0.30980393, 0, 1)
 text = "+100 pts"
 font = ExtResource("5_xs35j")
+
+[node name="PromptArea" parent="." unique_id=989733329 instance=ExtResource("6_bwioj")]
+
+[node name="CollisionShape3D" parent="PromptArea" index="0" unique_id=1844716175]
+shape = SubResource("SphereShape3D_tx240")
+
+[editable path="PromptArea"]

@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://cy4271wekj4wt" path="res://scripts/first_aid_kit.gd" id="1_rnaao"]
 [ext_resource type="ArrayMesh" uid="uid://krirm2td1db7" path="res://GameAssets/KayKit_Restaurant_Bits_1.0_FREE/obj/crate_tomatoes.obj" id="2_d56oc"]
 [ext_resource type="PackedScene" uid="uid://cajrqtke5twpp" path="res://scenes/Interactables/prompt_area.tscn" id="3_qb21m"]
+[ext_resource type="Texture2D" uid="uid://51spu5f5bikd" path="res://GameAssets/Icons/medicine-and-thematic-things-pixel-art-3232-icon-pack/1 Icons/Icon2_05.png" id="4_food_icon"]
 
 [node name="FoodSupply" type="Node3D" unique_id=1660509066]
 script = ExtResource("1_rnaao")
+hotbar_icon = ExtResource("4_food_icon")
 held_rotation_degrees = Vector3(90, 90, 0)
 
 [node name="Visual" type="Node3D" parent="." unique_id=1784236242]

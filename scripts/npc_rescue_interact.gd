@@ -4,8 +4,9 @@ extends CharacterBody3D
 @export var carry_offset := Vector3(0.0, 2.25, 0.0)
 @export var need_label_height := 2.4
 @export var help_requirement_path: NodePath
+@export var carry_prompt_text := "[F] to Carry Resident"
 
-@onready var prompt_area: PromptArea = $PromptArea
+@onready var prompt_area: PromptArea = $HelpRequirement/PromptArea
 @onready var help_requirement: HelpRequirement = _get_help_requirement()
 
 var nearby_player: Node3D
@@ -19,6 +20,9 @@ func _ready() -> void:
 	prompt_area.body_entered.connect(_on_prompt_area_body_entered)
 	prompt_area.body_exited.connect(_on_prompt_area_body_exited)
 
+	if help_requirement != null and not help_requirement.fulfilled.is_connected(_on_help_requirement_fulfilled):
+		help_requirement.fulfilled.connect(_on_help_requirement_fulfilled)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if carried or nearby_player == null:
 		return
@@ -31,6 +35,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _interact() -> void:
 	if not _can_be_carried():
+		if _nearby_player_has_required_item():
+			return
+
 		_show_requirement_blocked_prompt()
 		return
 
@@ -71,6 +78,7 @@ func _on_prompt_area_body_entered(body: Node3D) -> void:
 	if carried or not _is_local_player(body):
 		return
 	nearby_player = body
+	_update_prompt()
 	prompt_area._show_prompt()
 
 func _on_prompt_area_body_exited(body: Node3D) -> void:
@@ -110,6 +118,31 @@ func _can_be_carried() -> bool:
 	return help_requirement == null or help_requirement.requirement_fulfilled
 
 
+func _update_prompt() -> void:
+	if prompt_area == null:
+		return
+
+	if _can_be_carried():
+		prompt_area._set_prompt(carry_prompt_text)
+
+
+func _on_help_requirement_fulfilled(_item: PickableItem) -> void:
+	_update_prompt()
+	if nearby_player != null and prompt_area != null:
+		prompt_area._show_prompt()
+
+
+func _nearby_player_has_required_item() -> bool:
+	if help_requirement == null:
+		return false
+
+	var player := nearby_player as CharacterBody3D
+	if player == null:
+		return false
+
+	return help_requirement.player_has_required_item(player)
+
+
 func _get_help_requirement() -> HelpRequirement:
 	if not help_requirement_path.is_empty():
 		return get_node_or_null(help_requirement_path) as HelpRequirement
@@ -123,6 +156,6 @@ func _get_help_requirement() -> HelpRequirement:
 
 func _show_requirement_blocked_prompt() -> void:
 	if nearby_player != null and nearby_player.has_method("show_dialogue_message"):
-		nearby_player.show_dialogue_message("I can't carry them yet it's too risky.")
+		nearby_player.show_dialogue_message("I need to tend his wounds before carrying him.")
 	if prompt_area != null:
 		prompt_area._show_prompt()

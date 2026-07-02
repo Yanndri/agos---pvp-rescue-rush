@@ -12,6 +12,16 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v4as0"]
 
+[sub_resource type="Gradient" id="Gradient_3yihd"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0.35686275, 0, 0, 1, 0.32941177, 0, 0.39607844, 1, 0.35686275, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e06cx"]
+gradient = SubResource("Gradient_3yihd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oxdc4"]
+texture = SubResource("GradientTexture2D_e06cx")
+
 [resource]
 Button/colors/font_color = Color(0.4313522, 0.46110195, 0.46108735, 1)
 Button/colors/font_hover_color = Color(0.2, 0.2, 0.09803922, 1)
@@ -21,9 +31,14 @@ Button/styles/focus = SubResource("StyleBoxEmpty_ti8mq")
 Button/styles/hover = SubResource("StyleBoxEmpty_fccoc")
 Button/styles/normal = SubResource("StyleBoxEmpty_3kgdn")
 Button/styles/pressed = SubResource("StyleBoxEmpty_v4as0")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("1_3yihd")
-RichTextLabel/colors/default_color = Color(0.14509805, 0.16078432, 0.16078432, 1)
+Panel/styles/panel = SubResource("StyleBoxTexture_oxdc4")
+RichTextLabel/colors/default_color = Color(1, 1, 0.40784314, 1)
+RichTextLabel/colors/font_outline_color = Color(1, 0.2901961, 0, 1)
+RichTextLabel/constants/outline_size = 12
 RichTextLabel/font_sizes/bold_font_size = 24
-RichTextLabel/font_sizes/normal_font_size = 20
+RichTextLabel/font_sizes/normal_font_size = 24
 RichTextLabel/fonts/bold_font = null
-RichTextLabel/fonts/normal_font = null
+RichTextLabel/fonts/normal_font = ExtResource("1_3yihd")

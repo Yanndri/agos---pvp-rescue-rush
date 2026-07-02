@@ -1,0 +1,245 @@
+extends Node
+class_name PlayerInventory
+
+signal selected_item_changed(item: PickableItem)
+
+@export var hotbar_path: NodePath = NodePath("../PlayerUI/Hotbar")
+
+var held_item: PickableItem
+var hotbar_slots: Array[Control] = []
+var items: Array[PickableItem] = []
+var selected_slot_index := 0
+var player: CharacterBody3D
+
+
+func _ready() -> void:
+	player = get_parent() as CharacterBody3D
+	_cache_hotbar_slots()
+	_update_hotbar()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _is_local_player():
+		return
+
+	if event is InputEventKey and event.echo:
+		return
+
+	var hotbar_slot := _get_pressed_hotbar_slot(event)
+	if hotbar_slot == -1:
+		return
+
+	get_viewport().set_input_as_handled()
+	select_hotbar_slot(hotbar_slot)
+
+
+func has_free_slot() -> bool:
+	return _get_first_free_slot_index() != -1
+
+
+func add_item(item: PickableItem) -> bool:
+	if item == null:
+		return false
+
+	_ensure_inventory_size()
+
+	var existing_index := items.find(item)
+	if existing_index != -1:
+		selected_slot_index = existing_index
+	else:
+		var free_slot_index := _get_first_free_slot_index()
+		if free_slot_index == -1:
+			push_warning("Tried to add item with no free hotbar slot: " + str(item.name))
+			return false
+
+		items[free_slot_index] = item
+		selected_slot_index = free_slot_index
+
+	_sync_selected_item()
+	return true
+
+
+func remove_item(item: PickableItem) -> void:
+	var slot_index := items.find(item)
+	if slot_index == -1:
+		return
+
+	items[slot_index] = null
+
+	if held_item == item:
+		held_item = null
+
+	if selected_slot_index == slot_index:
+		selected_slot_index = _get_next_filled_slot_index(slot_index)
+	elif selected_slot_index >= items.size():
+		selected_slot_index = max(items.size() - 1, 0)
+
+	_sync_selected_item()
+
+
+func get_selected_item() -> PickableItem:
+	if held_item != null and is_instance_valid(held_item):
+		return held_item
+
+	_sync_selected_item()
+	return held_item
+
+
+func select_hotbar_slot(slot_index: int) -> void:
+	_ensure_inventory_size()
+
+	if slot_index < 0 or slot_index >= items.size():
+		return
+
+	var item := items[slot_index]
+	if item == null or not is_instance_valid(item):
+		return
+
+	selected_slot_index = slot_index
+	_sync_selected_item()
+
+
+func _cache_hotbar_slots() -> void:
+	hotbar_slots.clear()
+
+	var hotbar := get_node_or_null(hotbar_path)
+	if hotbar == null:
+		return
+
+	var slot_parent := hotbar.get_node_or_null("HBoxContainer")
+	if slot_parent == null:
+		slot_parent = hotbar
+
+	for child in slot_parent.get_children():
+		var slot := child as Control
+		if slot != null:
+			hotbar_slots.append(slot)
+
+	_ensure_inventory_size()
+
+
+func _update_hotbar() -> void:
+	_ensure_inventory_size()
+
+	for index in range(hotbar_slots.size()):
+		var slot := hotbar_slots[index]
+		var icon := _get_slot_icon(slot)
+		var item := items[index]
+
+		slot.self_modulate = Color.WHITE if index == selected_slot_index else Color(0.7, 0.7, 0.7, 1.0)
+
+		if icon != null:
+			if item != null and is_instance_valid(item):
+				icon.texture = item.hotbar_icon
+				icon.visible = item.hotbar_icon != null
+			else:
+				icon.texture = null
+				icon.visible = false
+
+
+func _get_slot_icon(slot: Control) -> TextureRect:
+	var direct_icon := slot.get_node_or_null("TextureRect") as TextureRect
+	if direct_icon != null:
+		return direct_icon
+
+	for child in slot.get_children():
+		var icon := child as TextureRect
+		if icon != null:
+			return icon
+
+	return null
+
+
+func _ensure_inventory_size() -> void:
+	while items.size() < hotbar_slots.size():
+		items.append(null)
+
+	while items.size() > hotbar_slots.size():
+		items.pop_back()
+
+
+func _get_first_free_slot_index() -> int:
+	_ensure_inventory_size()
+
+	for index in range(items.size()):
+		var item := items[index]
+		if item == null or not is_instance_valid(item):
+			return index
+
+	return -1
+
+
+func _get_next_filled_slot_index(start_index: int) -> int:
+	_ensure_inventory_size()
+
+	for index in range(start_index, items.size()):
+		var item := items[index]
+		if item != null and is_instance_valid(item):
+			return index
+
+	for index in range(0, start_index):
+		var item := items[index]
+		if item != null and is_instance_valid(item):
+			return index
+
+	return clamp(start_index, 0, max(items.size() - 1, 0))
+
+
+func _sync_selected_item() -> void:
+	_ensure_inventory_size()
+
+	held_item = null
+
+	for index in range(items.size()):
+		var item := items[index]
+		if item == null or not is_instance_valid(item):
+			items[index] = null
+			continue
+
+		var is_selected := index == selected_slot_index
+		item.visible = is_selected
+
+		if is_selected:
+			held_item = item
+
+	_update_hotbar()
+	selected_item_changed.emit(held_item)
+
+
+func _get_pressed_hotbar_slot(event: InputEvent) -> int:
+	var key_event := event as InputEventKey
+	if key_event == null or not key_event.pressed:
+		return -1
+
+	var hotbar_keys := [
+		KEY_1,
+		KEY_2,
+		KEY_3,
+		KEY_4,
+		KEY_5,
+		KEY_6,
+		KEY_7,
+		KEY_8,
+		KEY_9,
+		KEY_0,
+	]
+
+	var keycode := key_event.physical_keycode
+	if keycode == KEY_NONE:
+		keycode = key_event.keycode
+
+	var key_index := hotbar_keys.find(keycode)
+	if key_index == -1:
+		return -1
+
+	return 9 if key_index == 9 else key_index
+
+
+func _is_local_player() -> bool:
+	if player == null:
+		return false
+
+	if multiplayer.multiplayer_peer == null:
+		return true
+
+	return player.is_multiplayer_authority()
